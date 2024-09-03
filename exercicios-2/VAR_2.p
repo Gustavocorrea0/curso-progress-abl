@@ -4,4 +4,6 @@
 DEF VAR decimais AS DEC NO-UNDO.
 UPDATE
         decimais.
-DISPLAY decimais.
+
+MESSAGE decimais
+    VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.
