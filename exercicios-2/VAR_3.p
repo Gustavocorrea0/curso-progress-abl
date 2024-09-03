@@ -3,7 +3,7 @@
 */
 DEF VAR data AS DATE NO-UNDO.
 
-UPDATE
-        data.
+UPDATE data.
 
-DISPLAY data.
+MESSAGE data
+    VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.
