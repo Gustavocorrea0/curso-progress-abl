@@ -1,5 +1,5 @@
 PROCEDURE pro-retornar-nome:
-    DEF OUTPUT PARAMETER char-retornar-nome AS CHAR LABEL "Nome" FORMAT "x(40)" NO-UNDO.
+    DEF VAR char-retornar-nome AS CHAR LABEL "Nome" FORMAT "x(40)" NO-UNDO.
     
     UPDATE
           char-retornar-nome.
@@ -8,4 +8,4 @@ PROCEDURE pro-retornar-nome:
         VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.
 END.
 
-DEFINE VARIABLE char-nome AS CHARACTER   NO-UNDO.
+RUN pro-retornar-nome.

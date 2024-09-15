@@ -1,4 +1,4 @@
-DEFINE VARIABLE char-opcao AS CHARACTER LABEL "OpÃ§Ã£o escolhida"   NO-UNDO.
+DEFINE VARIABLE char-opcao AS CHARACTER LABEL "Opção escolhida" FORMAT "x(20)"  NO-UNDO.
 
 UPDATE
     char-opcao.

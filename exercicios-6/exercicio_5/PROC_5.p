@@ -1,8 +1,3 @@
-/*
-    5 - Execute o programa PROC_41.p como persistente e execute os metodos mostrarData e mostrarHora.
-    Utilize as Funcoes Date e Time.
-*/
-
 DEFINE VARIABLE h-programa AS HANDLE      NO-UNDO.
 
 DEFINE VARIABLE int-horas AS INT64 LABEL "Horas" NO-UNDO.

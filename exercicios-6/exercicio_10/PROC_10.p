@@ -1,15 +1,19 @@
-DEFINE VARIABLE h-programa AS HANDLE      NO-UNDO.
+FUNCTION fun-retornar-valor RETURN DEC(INPUT dec-valor-recebido AS DEC):
+    DEFINE VARIABLE dec-valor-percentual AS DECIMAL     NO-UNDO INITIAL 13.85.
+    DEFINE VARIABLE dec-valor-corrigido AS DECIMAL     NO-UNDO.
+    
+    dec-valor-corrigido = (dec-valor-recebido * dec-valor-percentual) / 100.
+    
+    RETURN dec-valor-corrigido. 
+END.
+
 DEFINE VARIABLE dec-valor-usuario AS DECIMAL LABEL "Valor"     NO-UNDO.
-DEFINE VARIABLE dec-valor-corrigido AS DECIMAL     NO-UNDO.
+DEFINE VARIABLE dec-percentual AS DECIMAL NO-UNDO.
 
-FUNCTION fun-retornar-valor RETURNS DEC(INPUT dec-valor-recebido AS DEC) IN h-programa.
-
-RUN exercicios-6\exercicio_10\PROC_9.p PERSISTENT SET h-programa.
-
-UPDATE 
+UPDATE
     dec-valor-usuario.
 
-dec-valor-corrigido = fun-retornar-valor(dec-valor-usuario).    
-    
-MESSAGE dec-valor-corrigido
+dec-percentual = fun-retornar-valor(dec-valor-usuario).
+
+MESSAGE dec-percentual
     VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.

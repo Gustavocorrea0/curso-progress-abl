@@ -3,4 +3,4 @@ FUNCTION fun-data-de-hoje-mais-30 RETURN DATE():
     RETURN data-hoje + 30.
 END.
 
-DISPLAY fun-data-de-hoje().
+DISPLAY fun-data-de-hoje-mais-30().

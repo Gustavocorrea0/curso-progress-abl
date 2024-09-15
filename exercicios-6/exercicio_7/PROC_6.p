@@ -1,0 +1,4 @@
+DEF INPUT PARAMETER char-retornar-nome AS CHAR LABEL "Nome" FORMAT "x(40)" NO-UNDO.
+       
+MESSAGE char-retornar-nome
+    VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.

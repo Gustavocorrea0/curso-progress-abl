@@ -1,0 +1,12 @@
+DEFINE TEMP-TABLE tt-item
+    LIKE sports2020.ITEM
+    
+    FIELD NCM AS CHARACTER LABEL "NCM"
+    FIELD percICMS AS DECIMAL LABEL "ICMS".
+
+CREATE tt-item.
+UPDATE
+    tt-item
+    EXCEPT
+    item-image
+WITH COLUMNS 1.

@@ -1,13 +1,6 @@
-/* REVER */
-PROCEDURE pro-retornar-nome:
-    DEF RETURN PARAMETER char-retornar-nome AS CHAR.
-    
-    UPDATE
-          char-retornar-nome.
-          
-    MESSAGE char-retornar-nome
-        VIEW-AS ALERT-BOX INFORMATION BUTTONS OK.
-END.
+DEFINE VARIABLE char-nome AS CHARACTER LABEL "Nome" FORMAT "x(50)"   NO-UNDO.
 
-DEFINE VARIABLE char-nome AS CHARACTER   NO-UNDO.
-//RUN pro-retornar-nome(OUTPUT char-nome).
+UPDATE
+    char-nome.
+
+RUN exercicios-6\exercicio_7\PROC_6.p (INPUT char-nome)
