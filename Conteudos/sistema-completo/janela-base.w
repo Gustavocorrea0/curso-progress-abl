@@ -92,6 +92,59 @@ DEFINE RECTANGLE linha1
     NO-FILL
     SIZE 45 BY .04.
     
+DEFINE RECTANGLE linha2 LIKE linha1.
+
+DEFINE QUERY qrPedidoCliente
+    FOR order
+    FIELDS(
+    Order.OrderDate
+    Order.OrderNum
+    Order.OrderStatus
+    Order.CustNum
+    Order.PromiseDate
+    Order.SalesRep
+    Order.ShipDate
+    )
+    SCROLLING.
+
+DEFINE BROWSE brPedidosCliente QUERY qrPedidoCliente NO-LOCK 
+    DISPLAY
+           Order.OrderDate
+           Order.OrderNum
+           Order.OrderStatus
+           Order.CustNum
+           Order.PromiseDate
+           Order.SalesRep
+           Order.ShipDate
+    WITH 
+        12 DOWN
+        WIDTH 146
+        SINGLE 
+        SIDE-LABELS
+        //SIZE {&LarguraJanela} BY {&AlturaJanela}
+        SEPARATORS
+        NO-ROW-MARKERS
+        SCROLLBAR-VERTICAL
+        FIT-LAST-COLUMN.
+        
+DEFINE BUTTON btAdicionarPedido LABEL "Adicionar"
+       TOOLTIP "Adicionar Pedido..."
+       NO-FOCUS
+       FLAT-BUTTON
+       SIZE 10 BY 1.
+
+DEFINE BUTTON btAlterarPedido LIKE btAlterarPedido
+    LABEL "Alterar"
+    TOOLTIP "Alterar Pedido...".
+    
+DEFINE BUTTON btDetalharPedido LIKE btAlterarPedido
+    LABEL "Detalhar"
+    TOOLTIP "Detalhe do Pedido...".
+   
+DEFINE BUTTON btEliminarPedido LIKE btAlterarPedido
+    LABEL "Remover"
+    TOOLTIP "Remover do Pedido...".
+              
 DEFINE FRAME FramePrincipal
 
     btPrimeiro  AT COL 1  ROW 2
@@ -114,13 +167,27 @@ DEFINE FRAME FramePrincipal
     Customer.NAME    AT COL 55 ROW 7 COLON-ALIGNED
     Customer.Contact AT COL 55 ROW 8 COLON-ALIGNED
     
-    linha1 AT COL 2 ROW 6
+    "Cliente" AT COL 2 ROW 3 
+    linha1    AT COL 2 ROW 4.3
     
-    WITH 
-        1 DOWN 
-        NO-BOX 
-        SIDE-LABELS
-        SIZE {&LarguraJanela} BY {&AlturaJanela}.
+    Customer.CustNum AT COL 60 ROW 5 COLON-ALIGNED
+    Customer.NAME    AT COL 60 ROW 6 COLON-ALIGNED
+    Customer.Contact AT COL 60 ROW 7 COLON-ALIGNED
+    
+    "Pedidos"        AT COL 3 ROW 8.5
+    linha2           AT COL 3 ROW 9.8
+    
+    btPedidosCliente AT COL 3 ROW 10.3
+    
+    btEliminarPedido AT COL 3 ROW 24
+    btAlterarPedido AT COL 13 ROW 24
+    btPedidosCliente AT COL 23 ROW 24
+    btAdicionarPedido AT COL 33 ROW 24
+    
+    
+    .
+    
+
 
 CREATE WINDOW JanelaPrincipal 
 ASSIGN
@@ -142,6 +209,7 @@ ASSIGN
     MESSAGE-AREA       = no
     SENSITIVE          = yes.
 
+// EVENTOS
 ON  END-ERROR OF JanelaPrincipal OR 
     ENDKEY OF JanelaPrincipal ANYWHERE DO:
     
@@ -164,6 +232,36 @@ DO:
     RUN DesabilitarJanela.
 END.
 
+ON 'choose':U OF btPrimeiro 
+DO:
+    FIND FIRST customer 
+             NO-LOCK
+             NO-ERROR.
+    
+    IF AVAILABLE customer THEN
+    DO:
+        DISPLAY
+            Customer.CustNum
+            Customer.NAME
+            Customer.Contact
+        WITH FRAME FramePrincipal.
+    END.
+END.
+
+ON 'choose':U OF btAnterior 
+DO:
+    RUN .
+END.
+
+ON 'choose':U OF btProximo 
+DO:
+    RUN .
+END.
+
+ON 'choose':U OF btAnterior 
+DO:
+    RUN .
+END.
 //PAUSE 0 BEFORE-HIDE.
 
 DO ON ERROR   UNDO, LEAVE
@@ -206,17 +304,64 @@ PROCEDURE HabilitarJanela:
     
     // ATIVA OS BOTOES
     ENABLE
-        btPrimeiro
-        btAnterior
-        btProximo 
-        btUltimo 
-        btPesquisar
-        btAdicionar
-        btAlterar
-        btDetalhar
-        btEliminar
-        btImprimir
-        linha1
+        codigoIncial
     WITH FRAME FramePrincipal.
     
 END PROCEDURE.
+
+
+PROCEDURE findFirstCustomer:
+    FIND FIRST customer NO-LOCK NO-ERROR.
+END.
+
+
+PROCEDURE findPrevCustomer:
+    FIND PREV customer NO-LOCK NO-ERROR.
+END.
+
+PROCEDURE findNextCustomer:
+    FIND NEXT customer NO-LOCK NO-ERROR.
+END.
+
+PROCEDURE findLastCustomer:
+    FIND LAST customer NO-LOCK NO-ERROR.
+END.
+
+
+PROCEDURE displayCustomer:
+    IF AVAILABLE customer THEN
+    DO:
+        DISPLAY
+            Customer.CustNum
+            Customer.NAME
+            Customer.Contact
+        WITH FRAME FramePrincipal.
+        
+        OPEN QUERY qrPedidosCliente
+        FOR EACH order NO-LOCK WHERE order.custnum = customer.custnum.
+    END. 
+END.
+
+PROCEDURE consultarPedidoCliente:
+    OPEN QUERY qrPedidoCliente
+    FOR EACH order NO-LOCK WHERE:
+    END.
+END.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

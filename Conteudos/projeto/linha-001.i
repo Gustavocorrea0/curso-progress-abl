@@ -1,0 +1,6 @@
+DEFINE RECTANGLE  {&NomeLinha}
+    EDGE-PIXELS 2
+    GRAPHIC-EDGE 
+    FGCOLOR 8
+    NO-FILL
+    SIZE 32 BY .04.
